@@ -3,6 +3,8 @@ const logger = require('../logger/logger')
 const util = require('../util/helper')
 const validator = require('../validator/formatter')
 const _ = require('lodash');
+const req = require('express/lib/request');
+const { route } = require('express/lib/application');
 
 const router = express.Router();
 
@@ -15,7 +17,31 @@ router.get('/test-me', function (req, res) {
     validator.trim()
     validator.lowerCase()
     validator.upperCase()
+
     res.send('My first ever api!')
+});
+
+router.get('/all-candidates', function(req, res){
+    const arr = ['Parul', 'Akku', 'Bhawna', 'Aishu', 'Aayu', 'Sneha', 'Simmi', 'Pankaj', 'Muzammil', 'Pranshu']
+
+    res.send(arr)
+});
+
+router.get('/candidates', function(req, res){
+    const arr = ['Parul', 'Akku', 'Bhawna', 'Aishu', 'Aayu', 'Sneha', 'Simmi', 'Pankaj', 'Muzammil', 'Pranshu']
+
+
+    let newArr = []
+    console.log(req.query)
+    for(let i=0; i<req.query.count; i++){
+        newArr.push(arr[i])
+    }
+    res.send(newArr)
+});
+
+router.get('/user-profile/:userName', function(req, res){
+    console.log(req.params.userName)
+    res.send('dummy response')
 });
 
 router.get('/hello', function (req, res){
@@ -34,6 +60,40 @@ router.get('/hello', function (req, res){
     console.log(frompair)
 
     res.send('My second ever api!')
+});
+
+router.get('/movies', function(req, res){
+    const arr = ['rand de basnasti', 'the shining', 'lord of the rings', 'bartman begins']
+
+
+    res.send(arr)
+});
+
+router.get('/movies/:indexNumber', function(req, res){
+    const arr = ['rand de basnasti', 'the shining', 'lord of the rings', 'bartman begins']
+
+    if(req.params.indexNumber>=arr.length){
+        res.send('ERROR: Use a valid index')
+    }
+    res.send(arr[req.params.indexNumber])
+});
+
+router.get('/films', function(req, res){
+    const movieArr = [ {
+        'id': 1,
+        'name': 'The Shining'
+       }, {
+        'id': 2,
+        'name': 'Incendies'
+       }, {
+        'id': 3,
+        'name': 'Rang de Basanti'
+       }, {
+        'id': 4,
+        'name': 'Finding Nemo'
+       }]
+       
+       res.send(movieArr)
 });
 
 module.exports = router;

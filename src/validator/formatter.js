@@ -1,5 +1,5 @@
 const trim_str = function trimString(){
-    const str = "   Hi my name is    Parul.    "
+    const str = "   Hi my name is Parul.        "
     console.log(str.trim())
 }
 
